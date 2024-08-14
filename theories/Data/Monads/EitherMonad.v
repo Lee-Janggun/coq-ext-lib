@@ -11,7 +11,7 @@ Section except.
   Variable T : Type.
   Universe i j.
 
-  Global Instance Monad_either : Monad (sum T) :=
+  Polymorphic Global Instance Monad_either : Monad (sum T) :=
   { ret  := fun _ v => inr v
   ; bind := fun _ _ c1 c2 => match c1 with
                                | inl v => inl v
@@ -19,7 +19,7 @@ Section except.
                              end
   }.
 
-  Global Instance Exception_either : MonadExc T (sum T) :=
+  Polymorphic Global Instance Exception_either : MonadExc T (sum T) :=
   { raise := fun _ v => inl v
   ; catch := fun _ c h => match c with
                             | inl v => h v

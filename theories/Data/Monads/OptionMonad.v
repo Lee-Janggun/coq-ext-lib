@@ -41,7 +41,7 @@ Section Trans.
 
   Context {M : Monad@{i j} m}.
 
-  Global Instance Monad_optionT : Monad optionT :=
+  Polymorphic Global Instance Monad_optionT : Monad optionT :=
   { ret _A := fun x => mkOptionT (ret (Some x))
   ; bind _A _B aMM f := mkOptionT
       (aM <- unOptionT aMM ;;
@@ -51,7 +51,7 @@ Section Trans.
        end)
   }.
 
-  Global Instance Zero_optionT : MonadZero optionT :=
+  Polymorphic Global Instance Zero_optionT : MonadZero optionT :=
   { mzero _A := mkOptionT (ret None) }.
 
   Polymorphic Global Instance MonadT_optionT : MonadT optionT m :=

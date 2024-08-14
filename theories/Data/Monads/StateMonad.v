@@ -18,7 +18,7 @@ Section StateType.
     snd (runState c s).
 
 
-  Global Instance Monad_state : Monad state :=
+  Polymorphic Global Instance Monad_state : Monad state :=
   { ret  := fun _ v => mkState (fun s => (v, s))
   ; bind := fun _ _ c1 c2 =>
     mkState (fun s =>
@@ -26,7 +26,7 @@ Section StateType.
       runState (c2 v) s)
   }.
 
-  Global Instance MonadState_state : MonadState S state :=
+  Polymorphic Global Instance MonadState_state : MonadState S state :=
   { get := mkState (fun x => (x,x))
   ; put := fun v => mkState (fun _ => (tt, v))
   }.

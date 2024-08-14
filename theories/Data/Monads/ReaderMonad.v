@@ -11,7 +11,7 @@ Section ReaderType.
   Record reader (t : Type@{i}) : Type@{j} := mkReader
   { runReader : S -> t }.
 
-  Global Instance Monad_reader : Monad reader :=
+  Polymorphic Global Instance Monad_reader : Monad reader :=
   { ret  := fun _ v => mkReader (fun _ => v)
   ; bind := fun _ _ c1 c2 =>
     mkReader (fun s =>
@@ -19,7 +19,7 @@ Section ReaderType.
       runReader (c2 v) s)
   }.
 
-  Global Instance MonadReader_reader : MonadReader S reader :=
+  Polymorphic Global Instance MonadReader_reader : MonadReader S reader :=
   { ask := mkReader (fun x => x)
   ; local := fun _ f cmd => mkReader (fun x => runReader cmd (f x))
   }.
@@ -84,7 +84,7 @@ Arguments mkReaderT {S} {m} {t} _.
 Arguments MonadWriter_readerT {S} {m} {T} {Mon} (_).
 
 
-Global Instance MonadReader_lift_readerT T S m (R : MonadReader T m) : MonadReader T (readerT S m) :=
+Polymorphic Global Instance MonadReader_lift_readerT T S m (R : MonadReader T m) : MonadReader T (readerT S m) :=
 { ask := mkReaderT (fun _ => ask)
 ; local := fun _ f c =>
   mkReaderT (fun s => local f (runReaderT c s))
